@@ -1,0 +1,52 @@
+<% include /public/header.html %>
+<link rel="stylesheet" href="/public/css/index/personal-order.css" />
+    <!-- 个人中心 开始 -->
+    <section class="container">
+        <h3 class="h3-title">个人中心</h3>
+    </section>
+    <section class="container personal-info">
+        <ul class="nav-left">
+            <li ><a href="/personal">个人中心</a></li>
+            <li class="active"><a href="/personal-order">我的订单</a></li>
+            <!-- <li><a href="javascript:;">收获地址</a></li>
+            <li><a href="javascript:;">修改密码</a></li>
+            <li><a href="javascript:;">收藏夹</a></li> -->
+        </ul>
+        <div class="info-right">
+            <table>
+                <thead>
+                    <tr>
+                        <th>订单号</th>
+                        <th>价格</th>
+                        <th>状态</th>
+                        <th>下单时间</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% for(var i in orders){ %>
+                    <tr>
+                        <td>
+                            <a href="/orders-done/<%= orders[i].order_id%>"><%= orders[i].order_id%></a>
+                        </td>
+                        <td>
+                            <%= orders[i].money%>
+                        </td>
+                        <td><%= states[orders[i].state]%></td>
+                        <td>
+                            <%= dateFormat(orders[i].create_time,'yyyy-MM-dd hh:mm:ss')%>
+                        </td>
+                        <td>
+                            <span>查看</span>
+                            <span>操作</span>
+                        </td>
+                    </tr>
+                    <%} %>
+                </tbody>
+            </table>
+        </div>
+    </section>
+    <!-- 个人中心 结束 -->
+
+<% include /public/footer.html %>
+<!-- 网站底部结束 -->

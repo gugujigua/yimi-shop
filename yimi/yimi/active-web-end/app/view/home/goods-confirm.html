@@ -1,0 +1,54 @@
+<% include /public/header.html %>
+<link rel="stylesheet" href="/public/css/index/goods-confirm.css">
+    
+    <!-- 支付订单 开始 -->
+    <div class="container">
+        <h3 class="h3-title">支付订单</h3>
+    </div>
+    <section class="container goods-confirm">
+        <div class="icon iconfont icon-chenggong"></div>
+        <div class="info">
+            <div class="top">
+                <span class="tips">订单 <span><%= data.order_id %></span>提交成功！去付款咯～</span>
+                <span class="pay-moneny">应付总额：<b><%= data.money %>元</b></span>
+            </div>
+            <div class="msg">请在0 小时 15 分内完成支付, 超时后将取消订单</div>
+        </div>
+    </section>
+    <section class="container goods-pay" style="margin-top: 30px;">
+        <h3 class="h3-title">选择支付方式付款</h3>
+        <div class="pay-list">
+            <div class="alipay" type="alipay">
+                <img src="/public/images/index/alipay.png" alt="">
+            </div>
+            <div class="weixin" type="weixin">
+                <img src="/public/images/index/weixin.jpg" alt="">
+            </div>
+        </div>
+        <div class="button-box">
+            <div class="pay-button">去付款</div>
+        </div>
+    </section>
+    <!-- 支付订单 结束 -->
+<script>
+    var $payList = $('.pay-list');
+    var $payButton = $('.pay-button');
+    var payType = null;
+    $payList.on('click','div',function(){
+        $('div', $payList).removeClass('active');
+        $(this).addClass('active');
+        payType = $(this).attr('type');
+    })
+    $payButton.click(function(){
+        if(!isLogin){
+            layer.msg("请登录");
+            return false;
+        }
+        if(!payType){
+            layer.msg("请选择支付方式");
+            return false;
+        }
+        location.href = "/pay-success";
+    })
+</script>
+<% include /public/footer.html %>

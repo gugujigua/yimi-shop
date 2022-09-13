@@ -1,0 +1,22 @@
+<!-- 轮播分类 开始 -->
+<section class="container banner-box">
+    <ul class="category <%if(theme.good_cate ==2){%> thumb-type <%}%>">
+        <% for(var i in goodCates){ %>
+        <li>
+            <a href="/cate-list/<%= goodCates[i].id%>"><%= goodCates[i].catename%></a>
+            <img src="<%= goodCates[i].thumb%>"/>
+        </li>
+        <% } %>
+    </ul>
+    <div class="banner swiper-container">
+        <div class="swiper-wrapper">
+            <% for(var i in wheels){ %>
+            <a class="swiper-slide" href="<%= wheels[i].url %>" style="background-image: url(<%= wheels[i].thumb %>);"></a>
+            <% } %>
+            
+        </div>
+        <div class="swiper-pagination"></div>
+    </div>
+</section>
+<script src="/public/js/index/banner.js"></script>
+<!-- 轮播分类 结束 -->

@@ -1,0 +1,37 @@
+.news-lists article{
+    background:#fff;
+    padding:40px 30px;
+}
+.news-lists article .content{
+    line-height: 2;
+    color:#333;
+    min-height: 400px;
+}
+
+.news-lists article .other{
+    height: 30px;
+    line-height: 30px;
+    margin: 0;
+    font-size: 14px;
+    color: #999;
+}
+.news-lists article .other .time{
+    margin-left:10px;
+}
+.news-lists article .other a:hover,
+.news-lists .news-tool div a:hover{
+    color: #EF8E25;
+}
+.news-lists .news-tool{
+    height:60px;
+    margin:20px 0;
+}
+.news-lists .news-tool div{
+    height:30px;
+    line-height:30px;
+    color:#666;
+}
+.news-lists .news-tool div a{
+    transition: color .2s;
+    color:#666;
+}

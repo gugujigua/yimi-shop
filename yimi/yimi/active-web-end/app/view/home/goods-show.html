@@ -1,0 +1,140 @@
+<% include /public/header.html %>
+<link rel="stylesheet" href="/public/css/index/goods-show.css" />
+    <!-- <%= JSON.stringify(data) %> -->
+    <!-- 面包屑导航 开始 -->
+    <section class="container">
+        <div class="crumb">
+            <a href="">首页</a>
+            <span>/</span>
+            <a href="">详情</a>
+        </div>
+    </section>
+    <!-- 面包屑导航 结束 -->
+    
+    <!-- 商品详情 开始 -->
+    <section class="container goods-show">
+        <div class="goods-info clearfix">
+            <div class="goods-images">
+                <div class="swiper-container">
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide"><img src="<%= data.thumb %>" alt=""></div>
+                        
+                    </div>
+                    <!-- 如果需要导航按钮 -->
+                    <!-- <div class="swiper-button-prev"></div> -->
+                    <!-- <div class="swiper-button-next"></div> -->
+                    
+                </div>
+                <!-- 如果需要分页器 -->
+                <div class="swiper-pagination"></div>
+            </div>
+            <div class="goods-buy-box">
+                <h2><%= data.title %></h2>
+                <p class="desc">
+                    <%= data.description %>
+                </p>
+                <div class="price-box">
+                    <div class="price">129元</div>
+                    <div class="original-price">239元</div>
+                </div>
+                <div class="line"></div>
+                <div class="position">
+                    <i class="iconfont icon-hanhan-01-01"></i>
+                    <span>山西</span>
+                    <span>太原市</span>
+                    <span>小店区</span>
+                    <span class="price">免运费</span>
+                </div>
+                <div class="specs-box">
+                    <div class="label">规格</div>
+                    <div class="specs">
+                        <div class="active">白色</div>
+                        <div>红色</div>
+                        <div>黑色</div>
+                    </div>
+                </div>
+                <div class="button-group">
+                    <a href="javascript:;" class="button join-car-btn">加入购物车</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="container">
+        <div class="hgroup">
+            <h3 class="h3-title">商品详情</h3>
+        </div>
+        <div class="content" style="text-align: <%= theme.good_align%>;">
+            <%- data.content %>
+        </div>
+    </section>
+    <!-- 商品详情 结束 -->
+
+    <!-- 网站底部开始 -->
+    
+    <script>
+        
+        var joinCarBtn = document.querySelector(".join-car-btn");
+        var price = document.querySelector(".price");
+        var originalPrice = document.querySelector('.original-price');
+        var specsDom = document.querySelector('.specs');
+       var specs = JSON.parse('<%- JSON.stringify(specs) %>')
+       console.log(specs)
+        var selectSpecs = specs[0];
+        var specsHtml = "";
+        function setPrice() {
+                price.innerHTML = selectSpecs.price + '元';
+                originalPrice.innerHTML = selectSpecs.original_price + '元'
+            }
+        for(var i=0;i<specs.length;i++){
+            if(specs[i].id == selectSpecs.id){
+                specsHtml += '<div index="'+i+'" class="active">'+ specs[i].specs+'</div>'
+            }else{
+                specsHtml += '<div index="' + i +'">' + specs[i].specs +'</div>';
+            }
+        }
+        specsDom.innerHTML = specsHtml;
+        setPrice()
+
+        specsDom.onclick = function(e){
+            console.log(e)
+            if(e.target.nodeName == "DIV"){
+                var index = e.target.getAttribute("index");
+                selectSpecs = specs[index];
+                specsDom.querySelectorAll('div').forEach(function(item){
+                    item.classList.remove('active');
+                })
+                e.target.classList.add('active');
+                setPrice()
+            }
+        }
+        joinCarBtn.onclick = function(){
+            if(!isLogin){
+                return layer.msg("请登录",function(){
+                    registerBox.hide();
+                    loginBox.show();
+                });
+            }
+            $.ajax({
+                type:"post",
+                url:'/car',
+                data:{
+                  username:username,
+                    nums:1,
+                    gid: selectSpecs.gid,
+                    specs_id: selectSpecs.id
+                },
+                success:function(res){
+                    if(res.code == 200){
+                        layer.msg(res.msg,function(){
+                            location.href = "/car"
+                        })
+                    }else{
+                        layer.msg(res.msg);
+                    }
+                }
+            })
+            
+        }
+    </script>
+    <% include /public/footer.html %>
+    <!-- 网站底部结束 -->

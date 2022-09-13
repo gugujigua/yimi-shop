@@ -1,0 +1,116 @@
+.goods-car{
+    background-color: #fff;
+}
+.goods-car table{
+    width:100%;
+}
+.goods-car tr{
+    border-bottom: 1px solid #eee;
+}
+.goods-car tr td{
+    text-align: center;
+    min-width: 80px;
+    padding:10px 0;
+    color:#444;
+}
+.goods-car tr td:nth-of-type(1) input{
+    width:20px;
+    height:20px;
+}
+.goods-car tr td:nth-of-type(1) input:checked{
+    background-color: #ef8e25;
+}
+.goods-car tr td:nth-of-type(5){
+    color:#ef8e25;
+    font-size: 20px;
+}
+.goods-car tr td:nth-of-type(5) .icon{
+    color:#444;
+    font-size: 22px;
+}
+.goods-car tr td:nth-of-type(6) .icon:hover{
+    color:#ef8e25;
+}
+.goods-car tr .goods-thumb{
+    height:50px;
+    vertical-align: middle;
+}
+.goods-car tr .goods-name{
+    height:50px;
+    vertical-align: middle;
+}
+.goods-car .price-box{
+    display: inline-block;
+    height:40px;
+    margin:5px 0;
+    overflow: hidden;
+    border:1px solid #ddd;
+}
+.goods-car .price-box input{
+    width:50px;
+    height:100%;
+    padding:0;
+    float:left;
+    border:0;
+    outline: 0;
+    text-align: center;
+}
+.goods-car .price-box .increment,
+.goods-car .price-box .decrement{
+    width:40px;
+    font-size: 20px;
+    font-weight: 200;
+    line-height: 40px;
+    text-align: center;
+    height:100%;
+    float:left;
+}
+.goods-car .price-box .decrement{
+    border-right:1px solid #ddd;
+}
+.goods-car .price-box .increment{
+    border-left:1px solid #ddd;
+}
+.goods-car thead tr th{
+    height:50px;
+    line-height: 50px;
+    color:#444;
+}
+.goods-car thead tr th.check{
+    width:80px; 
+}
+
+.goods-car .total-box{
+    height:60px;
+    line-height: 60px;
+    color:#444;
+}
+.goods-car .total-box .desc{
+    float:left;
+    padding:0 20px;
+}
+.goods-car .total-box .desc .num{
+    color:#ef8e25;
+    padding:0 2px;
+}
+.goods-car .total-box .right{
+    float:right;
+    height:100%;
+}
+.goods-car .total-box .total{
+    float:left;
+    padding:0 20px;
+    color:#ef8e25;
+}
+.goods-car .total-box .total .num{
+    font-size: 28px;
+}
+.goods-car .total-box .settlement-button{
+    float: right;
+    width:180px;
+    height:100%;
+    background-color: #ef8e25;
+    text-align: center;
+    line-height: 60px;
+    color:#fff;
+}

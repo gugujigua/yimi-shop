@@ -1,0 +1,74 @@
+<% include /public/header.html %>
+<link rel="stylesheet" href="/public/css/index/news-show.css">
+    
+    <!-- 轮播分类 开始 -->
+    <% include /public/banner.html %>
+    <!-- 轮播分类 结束 -->
+    <!-- 新闻详情 开始 -->
+    <section class="container">
+        <!-- 新闻详情开始 -->
+        <div class="news-lists">
+            <div class="crumb">
+                <a href="">首页</a> 
+                <span>/</span>
+                <a href="">详情</a>
+            </div>
+            <article>
+                <h2 style="text-align:<%= theme.title_align%>"><%= news.title%></h2>
+                <div class="other" style="text-align:<%= theme.title_align%>">
+                    <a href="/news-list/<%= news.cat_id%>"><%= news.catename %></a>
+                    <span class="time">时间：<%= dateFormat(news.create_time) %></span>
+                    <span class="time">访问：<%= news.click %></span>
+                </div>
+                <div class="content">
+                    <%- news.content%>
+                </div>
+            </article>
+            <div class="news-tool" style="text-align:<%= theme.page_align%>">
+                <div>
+                    <span>上一篇：</span>
+                    <a href="/news-show/<%= prevNews.id%>"><%= prevNews.title%></a>
+                </div>
+                <div>
+                    <span>下一篇：</span>
+                    <a href="/news-show/<%= nextNews.id%>"><%= nextNews.title%></a>
+                </div>
+            </div>
+        </div>
+        <!-- 新闻详情结束 -->
+        <!-- 阅读排行开始 -->
+        <div class="<% if(theme.new_rank == 1){ %> rank-lists <% }else{ %> thumb-lists <%}%>">
+                    <h3 class="h3-title">阅读排行</h3>
+                
+                    <% var index = 1;%>
+                    <% for(var i in hotNews){ %>
+                        <% if(theme.new_rank == 1){ %>
+                        <dl class=" item">
+            <dt><a href="/news-show/<%= hotNews[i].id %>" target="_blank" title=""><%= hotNews[i].title%></a></dt>
+            <dd class="time"><%= dateFormat(hotNews[i].create_time) %></dd>
+            <dd class="rank <%= index<=3?'red':''%>"><%= index%></dd>
+            <% index++ %>
+            </dl>
+            <%}else{%>
+            <dl class="item">
+                <dt>
+                    <a href="/news-show/<%= hotNews[i].id %>" target="_blank" title="">
+                        <img src="<%= hotNews[i].thumb %>" alt="">
+                    </a>
+                </dt>
+                <dd class="info">
+                    <a class="hidden2" href="/news-show/<%= hotNews[i].id %>" target="_blank"
+                        title=""><%= hotNews[i].title%></a>
+                    <div class="time"><%= dateFormat(hotNews[i].create_time) %></div>
+                </dd>
+            </dl>
+            <%}%> 
+                    <%}%>
+        
+        </div>
+        <!-- 阅读排行结束 -->
+    </section>
+    <!-- 新闻列表与排行结束 -->
+
+<script src="./js/index.js"></script>
+<% include /public/footer.html %>

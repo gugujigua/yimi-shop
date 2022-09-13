@@ -1,0 +1,55 @@
+<% include /public/header.html %>
+<link rel="stylesheet" href="/public/css/index/goods-order.css">
+
+    <!-- 确认订单 开始 -->
+    <div class="container">
+        <h3 class="h3-title">确认订单</h3>
+    </div>
+    <section class="container goods-order">
+        <h3 class="h3-title">收货地址</h3>
+        <div class="address-box">
+            <div class="address active">
+                <div class="name">张三</div>
+                <div class="phone">13100004444</div>
+                <div class="pos">山西省太原市小店区龙城大街山西省太原市小店区龙城大街</div>
+                <div class="edit iconfont icon-xiugai"></div>
+            </div>
+            <div class="address">
+                <div class="name">张三</div>
+                <div class="phone">13100004444</div>
+                <div class="pos">山西省太原市小店区龙城大街山西省太原市小店区龙城大街</div>
+                <div class="edit iconfont icon-xiugai"></div>
+            </div>
+            <div class="address add">添加地址</div>
+        </div>
+        <h3 class="h3-title">商品</h3>
+        <table class="goods">
+            <% for(var i in data.goods){ %>
+            <tr>
+                <td class="name">
+                    <img src="<%= data.goods[i].thumb%>" class="goods-thumb">
+                    <span class="goods-name"><%= data.goods[i].title%></span>
+                </td>
+                <td class="num"><%= data.goods[i].price%>元 x <%= data.goods[i].nums%></td>
+                <td class="total"><%= data.goods[i].price*data.goods[i].nums%>元</td>
+            </tr>
+            <%}%>
+        </table>
+        <div class="delivery">
+            <div class="label">配送</div>
+            <div class="content">免邮</div>
+        </div>
+        <div class="price-box">
+            <div class="goods-num">商品件数：<%= data.goods.length %>件</div>
+            <div class="goods-total">商品总价：<%= data.money%>元</div>
+            <div class="total">应付总额：
+            <%= data.money%>元</div>
+        </div>
+        <div class="button-group">
+            <a href="/car" class="button back">返回购物车</a>
+            <a href="/orders-confirm/<%= data.id%>" class="button settlement">去结算</a>
+        </div>
+    </section>
+    <!-- 确认订单 结束 -->
+    
+<% include /public/footer.html %>

@@ -1,0 +1,209 @@
+<% include /public/header.html %>
+<link rel="stylesheet" href="/public/css/index/goods-car.css" />
+    <!-- 商品购物车 开始 -->
+    <section class="container good-car-box">
+        <div class="hgroup">
+            <h3 class="h3-title">购物车</h3>
+        </div>
+        <div class="goods-car">
+            <table>
+                <thead>
+                    <tr>
+                        <th class="check"><input type="checkbox"></th>
+                        <th>商品名称</th>
+                        <th>单价</th>
+                        <th>数量</th>
+                        <th>小计</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody> 
+                    <tr>
+                        <td><input type="checkbox"></td>
+                        <td>
+                            <img src="./images/demo/5.jpg" class="goods-thumb">
+                            <span class="goods-name">小米体重秤2 白色</span>
+                        </td>
+                        <td>59元</td>
+                        <td>
+                            <div class="price-box">
+                                <div class="decrement">-</div>
+                                <input type="text" value="1">
+                                <div class="increment">+</div>
+                            </div>
+                        </td>
+                        <td>59</td>
+                        <td>
+                            <div class="icon iconfont icon-shanchu"></div>
+                        </td>
+                    </tr>
+                    
+                </tbody>
+            </table>
+            <div class="total-box">
+                <div class="desc">共计<span class="num goods-total">2</span>件商品，已选择<span class="num selecd">0</span>件</div>
+                <div class="right">
+                    <div class="total">
+                        合计<span class="num total-price">159</span>元
+                    </div>
+                    <div class="settlement-button">去结算</div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- 商品购物车 结束 -->
+<script>
+    var $goodsCarBody = $(".goods-car tbody");
+    var $goodsTotalNum = $(".total-box .goods-total");
+    var $goodsTotalSelecd = $(".total-box .selecd");
+    var $totalPrice = $(".total-box .total-price");
+    var $settlementButton = $('.settlement-button');
+    var goods = [];
+    var totalPrice = 0;
+    var selectedGoods = {};
+    var carId = null;
+    $.ajax({
+        url:"/car-goods",
+        success:function(res){
+            console.log(res)
+            if(res.code == 200){
+                goods = res.data;
+                totalGood(selectedGoods)
+                renderGood(res.data)
+                // 商品总数
+                $goodsTotalNum.html(goods.length);
+            }
+        }
+    })
+    // input checkbox 选中商品
+    function checkGood(id){
+        if(this.checked){
+            var good = null;
+            goods.forEach(function (item) {
+                if (item.id == id) {
+                    good = item;
+                }
+            })
+            selectedGoods[id] = good;
+        }else{
+            delete selectedGoods[id];
+        }
+        $goodsTotalSelecd.html(Object.keys(selectedGoods).length)
+        totalGood(selectedGoods)
+    }
+    function decrement(id){
+        var good = null;
+        goods.forEach(function (item) {
+            if (item.id == id) {
+                item.nums-=1;
+                good = item;
+                if(item.nums<=0){
+                    item.nums = 0;
+                }
+            }
+        })
+        $.ajax({
+            type: "post",
+            url: "/car-update/" + good.id,
+            data: { nums: good.nums }
+        })
+        renderGood(goods)
+        totalGood(selectedGoods)
+    }
+    function increment(id) {
+        var good = null;
+            goods.forEach(function (item) {
+                if (item.id == id) {
+                    item.nums += 1;
+                    good = item;
+                }
+            })
+            $.ajax({
+                type:"post",
+                url:"/car-update/"+ good.id,
+                data:{nums:good.nums}
+            })
+            renderGood(goods)
+            totalGood(selectedGoods)
+        }
+    function delGood(id,index){
+        $.ajax({
+            url:"/car-del/"+id,
+            type:"post",
+            success:function(res){
+                if(res.code == 200){
+                    goods.splice(index,1)
+                    delete selectedGoods[id]
+                    $goodsTotalSelecd.html(Object.keys(selectedGoods).length)
+                    totalGood(selectedGoods)
+                    renderGood(goods)
+                }
+            },
+            error:function(){
+                layer.msg("删除失败")
+            }
+        })
+    }
+    /**
+     * 计算商品总价
+     */
+    function totalGood(data){
+        totalPrice = 0;
+        for(var i in data){
+            totalPrice += data[i].nums*data[i].price;
+        }
+        $totalPrice.html(totalPrice)
+    }
+    function renderGood(goods){
+        var dataStr = "";
+        for (var i = 0; i < goods.length; i++) {
+            var data = goods[i]
+            dataStr += `<tr id="${data.id}">
+            <td><input type="checkbox" onclick="checkGood.call(this,${data.id} )" ${data.id in selectedGoods?'checked':''}></td>
+            <td>
+                <img src="${data.thumb}" class="goods-thumb">
+                <span class="goods-name">${data.title} ${data.specs}</span>
+            </td>
+            <td>${data.price}元</td>
+            <td>
+                <div class="price-box">
+                    <div class="decrement" onclick="decrement(${data.id})">-</div>
+                    <input type="text" value="${data.nums}">
+                    <div class="increment" onclick="increment(${data.id})">+</div>
+                </div>
+            </td>
+            <td>${data.price*data.nums}元</td>
+            <td>
+                <div class="icon iconfont icon-shanchu" onclick="delGood(${data.id},${i})"></div>
+            </td>
+        </tr>`
+        }
+        $goodsCarBody.html(dataStr)
+    }
+    $settlementButton.click(function(){
+        var goods = Object.values(selectedGoods);
+        if(goods.length<=0){
+            layer.msg("未选择任何商品");
+            return false;
+        }
+        var data = {
+            money: totalPrice,
+            goods: goods
+        };
+        console.log(data)
+        $.ajax({
+            url:"/orders-add",
+            type:"post",
+            data:data,
+            success:function(res){
+                if(res.code == 200){
+                    location.href = "/orders-done/"+res.data;
+                }else{
+                  layer.msg('结算失败')  
+                }
+            }
+        })
+    })
+</script>
+<% include /public/footer.html %>
+<!-- 网站底部结束 -->

@@ -1,0 +1,123 @@
+<% include /public/header.html %>
+<link rel="stylesheet" href="/public/css/index/index.css">
+    <!-- 轮播分类 开始 -->
+    <% include /public/banner.html %>
+    <!-- 轮播分类 结束 -->
+
+    <!-- 商品分类 开始 -->
+    <% for(var i=0;i<catesGoods.length;i++) { %>
+    <%if(catesGoods[i].goods.length>0){ %>
+    <section class="container">
+        <div class="hgroup">
+            <h3 class="h3-title"><%=catesGoods[i].catename%></h3>
+            <a href="/cate-list/<%=catesGoods[i].id%>" class="h3-more">MORE+</a>
+        </div>
+        <div class="goods-lists">
+            <% for(var j=0;j<catesGoods[i].goods.length;j++){ %>
+            <div class="item <%= theme.good_list==1?'':'list'%>">
+                <a href="/goods-show/<%=catesGoods[i].goods[j].id%>" target="_blank">
+                    <div class="figure-img">
+                        <img src="<%= catesGoods[i].goods[j].thumb %>" alt="">
+                    </div>
+                    <div class="info">
+                        <h3 class="title"><%= catesGoods[i].goods[j].title %></h3>
+                        <p class="desc"><%= catesGoods[i].goods[j].sub_title %></p>
+                        <p class="price">
+                            <span class="num"><%= catesGoods[i].goods[j].specs[0].price %></span>元
+                            <del><span class="num"><%= catesGoods[i].goods[j].specs[0].original_price %></span>元</del>
+                        </p>
+                    </div>
+                    
+                </a>
+            </div>
+            <%}%>
+            
+        </div>
+    </section>
+    <% } %>
+    <% } %>
+    <!-- 商品分类 结束 -->
+    <!-- 推荐新闻列表 开始 -->
+    <section class="container">
+
+    </section>
+    <!-- 推荐新闻列表 结束 -->
+    <!-- 新闻列表与排行 开始 -->
+    <section class="container">
+        <!-- 新闻列表开始 -->
+        <div class="news-lists <% if(theme.new_type == 1){ %>card <%}else{%> list <%}%>">
+            <h3 class="h3-title">最新文章</h3>
+            <% for(var i in newNews){ %>
+            <% if(theme.new_type == 1){ %>
+            <dl class="item">
+                <dt>
+                    <a href="/news-show/<%= newNews[i].id %>" target="_blank" title="">
+                        <img src="<%= newNews[i].thumb %>" alt="<%= newNews[i].title %>">
+                    </a>
+                </dt>
+                <dd>
+                    <a href="/news-show/<%= newNews[i].id %>"><%= newNews[i].title %></a>
+                </dd>
+                <dd class="sort">
+                    <a href="/news-list/<%= newNews[i].cat_id %>" target="_blank"> <%= newNews[i].catename %></a>
+                    <em class="time"><%= dateFormat(newNews[i].create_time) %></em>
+                </dd>
+            </dl>
+            <%}else{%>
+            <dl class="item">
+                <dt>
+                    <a href="/news-show/<%= newNews[i].id %>" target="_blank" title="">
+                        <img src="<%= newNews[i].thumb %>" alt="<%= newNews[i].title %>" style="width:100%;height:100%;">
+                    </a>
+                </dt>
+                <dd class="title hidden1">
+                    <a href="/news-show/<%= newNews[i].id %>"><%= newNews[i].title %></a>
+                </dd>
+                <dd class="desc hidden3">
+                    <%= newNews[i].description %>
+                </dd>
+                <dd class="sort">
+                    <a href="/news-list/<%= newNews[i].cat_id %>" target="_blank"> <%= newNews[i].catename %></a>
+                    <em class="time"><%= dateFormat(newNews[i].create_time) %></em>
+                </dd>
+            </dl>
+            <%}%>
+            <% } %>
+            
+        </div>
+        <!-- 新闻列表结束 -->
+        <!-- 阅读排行开始 -->
+        <div class="<% if(theme.new_rank == 1){ %> rank-lists <% }else{ %> thumb-lists <%}%>">
+            <h3 class="h3-title">阅读排行</h3>
+        
+            <% var index = 1;%>
+            <% for(var i in hotNews){ %>
+                <% if(theme.new_rank == 1){ %>
+                <dl class="item">
+                    <dt><a href="/news-show/<%= hotNews[i].id %>" target="_blank"
+                            title=""><%= hotNews[i].title%></a></dt>
+                    <dd class="time"><%= dateFormat(hotNews[i].create_time) %></dd>
+                    <dd class="rank <%= index<=3?'red':''%>"><%= index%></dd>
+                    <% index++ %>
+                </dl>
+                <%}else{%>
+                <dl class="item">
+                    <dt>
+                        <a href="/news-show/<%= hotNews[i].id %>" target="_blank" title="">
+                            <img src="<%= hotNews[i].thumb %>" alt="">
+                        </a>
+                    </dt>
+                    <dd class="info">
+                        <a class="hidden2" href="/news-show/<%= hotNews[i].id %>" target="_blank" title=""><%= hotNews[i].title%></a>
+                        <div class="time"><%= dateFormat(hotNews[i].create_time) %></div>
+                    </dd>
+                </dl>
+                <%}%> 
+            <%}%>
+           
+        </div>
+        <!-- 阅读排行结束 -->
+    </section>
+    <!-- 新闻列表与排行结束 -->
+
+<% include /public/footer.html %>

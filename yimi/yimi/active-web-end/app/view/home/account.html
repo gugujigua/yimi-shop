@@ -1,0 +1,43 @@
+<% include /public/header.html %>
+<link rel="stylesheet" href="/public/css/index/news-show.css">
+
+<!-- 轮播分类 开始 -->
+<% include /public/banner.html %>
+<!-- 轮播分类 结束 -->
+<!-- 新闻详情 开始 -->
+<section class="container">
+    <!-- 新闻详情开始 -->
+    <div class="news-lists">
+        <div class="crumb">
+            <a href="/">首页</a>
+            <span>/</span>
+            <a href="">详情</a>
+        </div>
+        <article>
+            <h2>账户管理</h2>
+            <div class="content">
+                1.打开商城，点击右上角“注册”按钮<br> 2.输入账号和密码 <br> 3.点击“下一步”按钮 <br> 4.按提示输入您的信息，设置密码，完成注册。
+            </div>
+        </article>
+        
+    </div>
+    <!-- 新闻详情结束 -->
+    <!-- 阅读排行开始 -->
+    <div class="rank-lists">
+        <h3 class="h3-title">阅读排行</h3>
+        <% var index = 1;%>
+        <% for(var i in hotNews){ %>
+        <dl class="item">
+            <dt><a href="/news-show/<%= hotNews[i].id %>" target="_blank" title=""><%= hotNews[i].title%></a></dt>
+            <dd class="time"><%= dateFormat(hotNews[i].create_time) %></dd>
+            <dd class="rank <%= index<=3?'red':''%>"><%= index%></dd>
+            <% index++ %>
+        </dl>
+        <%}%>
+        </div>
+        <!-- 阅读排行结束 -->
+    </section>
+    <!-- 新闻列表与排行结束 -->
+
+<script src="./js/index.js"></script>
+<% include /public/footer.html %>

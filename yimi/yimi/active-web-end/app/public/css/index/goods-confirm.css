@@ -1,0 +1,67 @@
+.goods-confirm,.goods-pay{
+    background-color: #fff;
+    overflow: hidden;
+}
+.goods-confirm {
+    padding:30px 0;
+}
+.goods-confirm .icon{
+    font-size: 88px;
+    margin:0px 40px;
+    float: left;
+    color:#83c44e;
+}
+.goods-confirm .info{
+    float:left;
+    width:calc(100% - 224px);
+}
+.goods-confirm .info .top .tips{
+    float:left;
+}
+.goods-confirm .info .top .pay-moneny{
+    float:right;
+}
+.goods-confirm .info .top .pay-moneny b{
+    color:#ef8e25;
+}
+.goods-confirm .info .top,
+.goods-confirm .info .msg{
+    height:50px;
+    line-height:50px;
+    font-size:22px;
+    font-weight: 200;
+}
+.goods-pay{
+    padding:0 30px 30px;
+    box-sizing: border-box;
+}
+.goods-pay .pay-list{
+    overflow: hidden;
+}
+.goods-pay .pay-list div{
+    float:left;
+    width: 174px;
+    height: 60px;
+    border:1px solid #eee;
+    margin-right:30px;
+    overflow: hidden;
+}
+.goods-pay .pay-list div:hover{
+    cursor: pointer;
+    border:1px solid #ef8e25;
+}
+.goods-pay .pay-list div.active{
+    border:1px solid #ef8e25;
+}
+.goods-confirm .button-box{
+    margin-top:20px;
+}
+.goods-pay .button-box .pay-button{
+    float: right;
+    width:180px;
+    height:50px;
+    background-color: #ef8e25;
+    text-align: center;
+    line-height: 50px;
+    color:#fff;
+}

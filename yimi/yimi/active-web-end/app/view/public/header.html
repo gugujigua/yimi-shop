@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title><%= info.title %></title>
+    <meta name="description" content="<%= info.description %>" />
+    <meta name="keywords" content="<%= info.keywords  %>" />
+    <link rel="stylesheet" href="https://at.alicdn.com/t/font_2435006_sxqkd2kytdj.css">
+    <link rel="stylesheet" href="/public/css/u-reset.min.css">
+    <link rel="stylesheet" href="/public/css/index/common-news.css">
+    <link href="/public/css/index/swiper-bundle.css" rel="stylesheet">
+    <script src="/public/js/index/jquery.min.js"></script>
+    <script src="/public/js/index/swiper.min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/layer/3.1.1/layer.min.js"></script>
+</head>
+
+<body>
+    <!-- 登录 开始 -->
+    <div class="dialog login-box">
+        <div class="login">
+            <h3 class="h3-title">登录商城</h3>
+            <div class="close-btn">×</div>
+            <form action="" method="POST">
+                <div class="form-item">
+                    <label for="">账号</label>
+                    <input type="text" name="username" placeholder="请输入账号" required>
+                </div>
+                <div class="form-item">
+                    <label for="">密码</label>
+                    <input type="password" name="password" autocomplete="off" required placeholder="请输入密码">
+                </div>
+                <div class="form-item">
+                    <label for=""></label>
+                    <input type="submit" vlaue="登录">
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- 登录 结束 -->
+    <!-- 注册开始 -->
+    <div class="dialog register-box">
+        <div class="login">
+            <h3 class="h3-title">注册账号</h3>
+            <div class="close-btn">×</div>
+            <form action="" method="POST">
+                <div class="form-item">
+                    <label for="">账号</label>
+                    <input type="text" name="username" placeholder="请输入账号" required>
+                </div>
+                <div class="form-item">
+                    <label for="">密码</label>
+                    <input type="password" name="password" placeholder="请输入密码" autocomplete="off" required>
+                </div>
+                <div class="form-item">
+                    <label for="">确认密码</label>
+                    <input type="password" name="repassword" placeholder="请输入确认密码" autocomplete="off" required>
+                </div>
+                <div class="form-item">
+                    <label for=""></label>
+                    <input type="submit" vlaue="注册">
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- 注册结束 -->
+    <!-- 网站头部开始 -->
+    <header class="header">
+        <div class="container" style="height:100%;">
+            <div class="logo"><a href="/"><%= info.name%></a></div>
+            <nav class="nav">
+                <a href="/" title="" <%= cat_id==0?'class=active':''%> >首页</a>
+                <% for(var i in cates){ %>
+                <a href="/news-list/<%= cates[i].id %>" title="<%= cates[i].catename%>" <%= cat_id==cates[i].id?'class=active':''%> ><%= cates[i].catename%></a>
+                <% } %>
+            </nav>
+            <div class="search-box">
+                <div class="top">
+                    <div class="btns islogin">
+                        <a href="javascript:;" class="login-btn">登录</a>
+                        <div class="line"></div>
+                        <a href="javascript:;" class="register-btn">注册</a>
+                    </div>
+                    <div class="btns nologin">
+                        <a href="/personal" class="personal"></a>
+                        <div class="line"></div>
+                        <a href="javascript:;" class="loginout-btn">退出登录</a>
+                    </div>
+                    <div class="line"></div>
+                    <a class="car" href="/car">
+                        <i class="iconfont icon-car"></i>
+                        购物车
+                    </a>
+                </div>
+                <div class="search">
+                    <form action="/search" method="get">
+                        <input type="text" placeholder="请输入关键词" name="key">
+                        <button class="iconfont icon-sousuo" type="submit"></button>
+                    </form>
+                    
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- 网站头部结束 -->
+    <script>
+        var loginBox = $('.login-box');
+        var registerBox = $('.register-box');
+        var loginBtn = $('.login-btn');
+        var registerBtn = $(".register-btn");
+        var closeBtn = $('.close-btn');
+        var loginForm = $(".login-box form");
+        var registerForm = $(".register-box form");
+        var loginoutBtn = $('.loginout-btn');
+        var personal = $('.personal');
+        var islogin = $('.top .islogin');
+        var nologin = $('.top .nologin');
+        var isLogin = <%= isLogin%>
+        var nickname = '<%= nickname %>';
+        var username = '<%= username %>';
+        if(isLogin){
+            showPersonal();
+            personal.html(nickname)
+        }else{
+            showBtn();
+        }
+        // 登录逻辑
+        loginBtn.click(function(){
+            registerBox.hide();
+            loginBox.show();
+        })
+        loginForm.submit(function(){
+            var that = this;
+            var dataStr = $(this).serialize();
+            $.ajax({
+                type:"post",
+                url:"/login",
+                data:dataStr,
+                success:function(res){
+                    if(res.code == 200){
+                        personal.html(res.data.nickname)
+                        loginBox.hide();
+                        showPersonal();
+                        that.reset();
+                        isLogin = true;
+                    }
+                    layer.msg(res.msg);
+                },
+                error:function(){
+                    layer.msg("登录错误，请稍后重试~")
+                }
+            })
+            return false;
+        })
+        
+        // 注册逻辑
+        registerBtn.click(function(){
+            loginBox.hide();
+            registerBox.show();
+        })
+        
+        registerForm.submit(function () {
+            var that = this;
+            var dataStr = $(this).serialize();
+            $.ajax({
+                type: "post",
+                url: "/register",
+                data: dataStr,
+                success: function (res) {
+                    if (res.code == 200) {
+                        registerBox.hide();
+                        loginBox.show();
+                            that.reset();
+                    }
+                    layer.msg(res.msg);
+                },
+                error: function () {
+                    layer.msg("注册错误，请稍后重试~")
+                }
+            })
+            return false;
+        })
+        // 退出登录
+        loginoutBtn.click(function(){
+            $.ajax({
+                type:"post",
+                url: "/loginout",
+                success: function (res) {
+                    if (res.code == 200) {
+                        showBtn()
+                    }
+                    layer.msg(res.msg);
+                },
+                error: function () {
+                    layer.msg("出错了，请稍后重试~")
+                }
+            })
+        })
+        // 关闭按钮
+        closeBtn.click(function () {
+            $(this).parent().parent().hide();
+        })
+        // 显示个人中心
+        function showPersonal() {
+            islogin.hide();
+            nologin.css('display', 'inline-block');
+        }
+        // 显示登录注册按钮
+        function showBtn() {
+            islogin.css('display', 'inline-block');
+            nologin.hide();
+        }
+    </script>

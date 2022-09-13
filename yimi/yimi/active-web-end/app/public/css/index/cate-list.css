@@ -1,0 +1,35 @@
+.category{
+    background:#fff;
+    margin-bottom: 20px;
+    padding:5px 20px;
+    box-sizing: border-box;
+}
+.category .item{
+    /* border:1px solid red; */
+    overflow: hidden;
+    line-height: 40px;
+}
+.category .item:nth-of-type(1){
+    border-bottom:1px solid #eee;
+}
+.category .item .label{
+    float:left;
+    width:50px;
+    line-height:40px;
+    text-align: center;
+    color:#333;
+    font-size: 14px;
+}
+.category .item .list {
+    float:left;
+    width:calc(100% - 50px);
+    /* background-color: #ccc; */
+}
+.category .item .list a{
+    font-size:14px;
+    margin:0 10px;
+}
+.category .item .list a:hover,
+.category .item .list a.active{
+    color: #EF8E25;
+}

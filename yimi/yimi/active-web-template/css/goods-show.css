@@ -1,0 +1,137 @@
+.line{
+    border-top:1px solid #eee;
+    margin-bottom: 20px;
+}
+.goods-show{
+    background-color: #fff;
+}
+.goods-info {
+    /* background:#ccc; */
+    overflow: hidden;
+}
+.goods-info .goods-images{
+    width:560px;
+    height:560px;
+    padding:20px;
+    float:left;
+    position: relative;
+}
+.goods-info .goods-images img{
+    width:100%;
+}
+
+.goods-info .swiper-pagination{
+    bottom: 20px;
+    left:50%;
+    transform: translate(-50%);
+}
+.goods-info .swiper-pagination .swiper-pagination-bullet{
+    width:50px;
+    height:5px;
+    border-radius: 0;
+    margin-right:5px;
+}
+.goods-info .swiper-pagination .swiper-pagination-bullet-active{
+    background-color: #EF8E25;
+}
+.swiper-button-prev, .swiper-button-next{
+    color: #EF8E25;
+}
+.goods-info .goods-buy-box{
+    float:left;
+    width:600px;
+    padding:40px 30px;
+    box-sizing: border-box;
+}
+.goods-info .goods-buy-box h2{
+    color:#333;
+    line-height: 40px;
+}
+.goods-info .goods-buy-box .desc{
+    color: #b0b0b0;
+    margin: 0;
+    padding: 0;
+    padding-top: 8px;
+    line-height: 1.5;
+}
+.goods-info .goods-buy-box .price-box{
+    margin:15px 0;
+    overflow: hidden;
+}
+.goods-info .goods-buy-box .price-box div{
+    display: inline-block;
+}
+.goods-info .goods-buy-box .price-box .price{
+    color:#EF8E25;
+    font-size: 22px;
+    vertical-align: baseline;
+}
+.goods-info .goods-buy-box .price-box .original-price{
+    color:#999;
+    font-size:16px;
+    vertical-align: baseline;
+    text-decoration: line-through;
+}
+.goods-info .goods-buy-box .position{
+    padding: 30px 50px;
+    position: relative;
+    background: #fafafa;
+    border: 1px solid #e0e0e0;
+}
+.goods-info .goods-buy-box .position .iconfont{
+    font-size: 20px;
+    margin-right:10px;
+}
+.goods-info .goods-buy-box .position  span{
+    margin-right:5px;
+}
+.goods-info .goods-buy-box .position .price{
+    color:#EF8E25;
+}
+.goods-info .goods-buy-box .button-group{
+    margin-top:30px;
+}
+.goods-info .goods-buy-box .button-group .button{
+    display: block;
+    width: 298px;
+    height: 52px;
+    line-height: 52px;
+    font-size: 16px;
+    background-color: #EF8E25;
+    color:#fff;
+    text-align: center;
+}
+.goods-info .specs-box{
+    margin-top: 30px;
+    overflow: hidden;
+}
+.goods-info .specs-box .label{
+    width:50px;
+    font-size:20px;
+    font-weight: 200;
+    line-height: 40px;
+    float: left;
+}
+.goods-info .specs-box .specs{
+    width:calc(100% - 50px);
+    float: left;
+    overflow: hidden;
+}
+.goods-info .specs-box .specs div {
+    padding:10px 30px;
+    height:20px;
+    float: left;
+    margin-right:15px;
+    border:1px solid #eee;
+}
+.goods-info .specs-box .specs div.active{
+    border-color: #ef8e25;
+}
+.content{
+    background-color: #fff;
+    font-size:20px;
+    font-weight: 200;
+}
+.content img{
+    max-width: 100%;
+}

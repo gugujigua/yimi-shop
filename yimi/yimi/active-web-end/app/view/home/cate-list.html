@@ -1,0 +1,80 @@
+<% include /public/header.html %>
+<link rel="stylesheet" href="/public/css/index/cate-list.css">
+
+    <!-- 面包屑导航 开始 -->
+    <section class="container">
+        <div class="crumb">
+            <a href="/">首页</a>
+            <span>/</span>
+            <a href="">列表</a>
+        </div>
+    </section>
+    <!-- 面包屑导航 结束 -->
+    <!-- 商品分类 开始-->
+    <section class="container category">
+        <div class="item">
+            <div class="label">分类：</div>
+            <div class="list">
+                <% if(subGoodCates.length>0){ %>
+                    <% for(var i in subGoodCates){ %>
+                    <a href="/cate-list/<%= subGoodCates[i].pid %>?sub_id=<%= subGoodCates[i].id %>" <% if(sub_cat_id == subGoodCates[i].id){ %>class="active"<% } %> ><%= subGoodCates[i].catename %></a>
+                    <%}%>
+                <%}%>
+            </div>
+        </div>
+        <div class="item">
+            <div class="label">排序：</div>
+            <div class="list">
+                <a href="/cate-list/<%= cat_id %>?sub_id=<%= sub_cat_id %>&type=1" 
+                <% if(type == 1){ %>class="active"<% } %>
+                    >最新</a>
+                <a href="/cate-list/<%= cat_id %>?sub_id=<%= sub_cat_id %>&type=2"
+                    <% if(type == 2){ %>class="active"<% } %>
+                    >价格</a>
+            </div>
+        </div>
+    </section>
+    <!-- 商品分类 结束 -->
+    <!-- 商品列表 开始 -->
+    <section class="container">
+        <div class="goods-lists">
+            <%for(var i=0;i<data.data.length;i++){ %>
+            <div class="item  <%= theme.good_list==1?'':'list'%>">
+                <a href="/goods-show/<%= data.data[i].id %>" target="_blank">
+                    <div class="figure-img">
+                        <img src="<%= data.data[i].thumb %>" alt="">
+                    </div>
+                    <div class="info">
+                        <h3 class="title"><%= data.data[i].title %></h3>
+                        <p class="desc"><%= data.data[i].sub_title %></p>
+                        <p class="price">
+                            <span class="num"><%= data.data[i].specs[0].price %></span>元
+                            <del><span class="num"><%= data.data[i].specs[0].original_price %></span>元</del>
+                        </p>
+                    </div>
+                </a>
+            </div>
+            <%}%>
+        </div>
+    </section>
+    <!-- 商品列表 结束 -->
+
+    <!-- 分页 开始 -->
+    <%if(data.pages>1){ %>
+    <div class="page-box container">
+        <a href="/cate-list/<%= cat_id%>?sub_id=<%= sub_cat_id%>&page=<%= data.page-1 <= 1?1:data.page-1%>&type=<%=type%>" class="prev-page">上一页</a>
+        <div class="page-list">
+            <% for(var i=1;i<=data.pages;i++){ %>
+                <% if(data.page == i){ %>
+                <span><%= i%></span>
+                <% }else{ %>
+                <a href="/cate-list/<%= cat_id%>?sub_id=<%= sub_cat_id%>&page=<%= i%>&type=<%=type%>"><%= i%></a>
+                <%}%>
+            <%}%>
+        </div>
+        <a href="/cate-list/<%= cat_id%>?sub_id=<%= sub_cat_id%>&page=<%= data.page*1+1>=data.pages?data.pages:data.page*1+1%>&type=<%=type%>" class="next-page">下一页</a>
+    </div>
+    <%}%>
+    <!-- 分页 结束 -->
+
+<% include /public/footer.html %>
